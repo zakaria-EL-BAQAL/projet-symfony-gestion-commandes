@@ -1,0 +1,33 @@
+{% extends 'base.html.twig'%}
+
+{% block title %} Edit Product {% endblock %}
+
+
+
+
+{% block body %}
+    <div class="container text-center">
+         <div class="card bg-info text-white text-center"><h1 >Edit product</h1></div><br><br>
+            <div class="col-md-12 offset-md-0 ">
+               
+                               
+                {{ form_start(form) }}
+
+                 <div class="d-inline-block  col-md-9 col-xs-6 col-md-offset-3 ">
+                    {{ form_widget(form)}}
+                
+                        <button type="submit" class=" btn btn-success  ">
+                            <i class="fa fa-edit"></i>Edit product
+                        </button>
+                
+                     {{ form_end(form) }}     
+                </div><br>
+                <div class="d-inline-block">
+                      <a  class="btn btn-primary " href="{{ path('index_route') }}">
+                    <i class="fa fa-table"></i>
+                    List product
+                  </a>
+                </div>
+    </div>         
+{% endblock %}
+

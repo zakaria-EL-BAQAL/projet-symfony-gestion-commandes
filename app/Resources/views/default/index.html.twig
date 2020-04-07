@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+     
+  <!-- Page Content -->
+  
+{# {% if commandEnCours | length > 0 %}
+   <div id="command-div" class="fixed-bottom bg-dark text-center p-3">
+           <div class="container">
+                          <div class="row">
+                              <div class="col-6 offset-3">
+                                    <a id="rapport" class="btn btn-warning center form-control text-white" href="#">
+                                    You have already {{commandEnCours | length}} products to <strong>Command Now</strong></a>
+                              </div>
+                          </div>
+            </div> 
+   </div>
+
+  {% endif %} #}
+   
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+      <h1 class="display-3">A Product orders!</h1>
+      <p class="lead">Purchasing products is very easy by selecting the products sold by a supplier and importing them to the purchase order. All available product information will be transferred to the purchase ordert.</p>
+      <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
+    </header>
+
+    <!-- Page Features -->
+
+    
+    
+    
+
+  <div class="row text-center">
+      {% for produit in produits %}
+          {% set url = path('produit_show', {'id' : produit.id} ) %}
+          {% set editUrl = path('produit_edit',{'id':produit.id} ) %}
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100" data-product="{{produit.id}}">
+              <a href="{{editUrl }}">
+                <img class="card-img-top" src="{{ produit.urlImage }}" alt="">
+              </a>
+              <div class="card-body">
+                      <a href="{{editUrl }}">
+                      <h4 class="card-title">{{ produit.title }}</h4>
+                    </a>
+                      <p class="card-text">{{ produit.description }}</p>
+                      <h2>{{ produit.price | number_format(2) }} Dh</h2>
+                      
+
+              </div>
+              <div class="card-footer">
+                
+                    {% if app.user and app.user.deletedAt == null %}
+                    <div class="row">
+                      <button type="button" id = {{ produit.id }} class="btn btn-outline-primary btn-sm btn-block view-data" data-toggle="modal" 
+                      data-target="#myModal" value = "Show"><i class="fa fa-eye"></i>Show</button>
+                     </div> 
+                      {% endif %}    
+                  
+                   {% if is_granted('ROLE_ADMIN') %}
+                   <div class="row mt-2">
+                            <a class="text-success w-100" href="{{editUrl}}"><button class="btn btn-outline-warning btn-sm btn-block "><i class="fa fa-edit"></i>Edit</button></a>
+                      </div>  
+                         {% endif %}
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+  </div>
+   
+
+
+      <div class="modal fade" role="dialog" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <input type="hidden" id="productIdJson">
+                  <h5 class="modal-title text-center" id="productTitleJson">Product info</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" id="info-produit">
+                  
+                    <div class="container">
+                              <div class="row">
+                                  <img style="height=100px; width=100px;" class="img-fluid" src="" id="productImageJson"/>
+                              </div> 
+                              <div class="row mt-2">
+                                  <p id="productDescriptionJson"></p>
+                              </div>
+                              <div class="row">
+                                    <div class="col">
+                                      <h2 id="productPriceJson"></h2>
+                                    </div>
+                                    <div class="col">
+                                      <div class="row">
+                                        <div class="col text-right">
+                                              <h3>Qte :<h3>
+                                        </div>
+                                        <div class="col ">
+                                              <input class="form-control" id="productQuantity" type="number" value="1">
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block" id="adToCartBtn"><i class="fa fa-plus"></i> Add to your chart</button>
+                                  </div>
+                                </div>
+                              </div>
+
+                    <div class="row d-none mt-3" id="ftCommand" >
+                    <div class="col-6">
+                      <a type="button" class="btn btn-success btn-sm btn-block text-white" href="{{ path('commander') }}">
+                        <i class="fa fa-check" aria-hidden="true"> </i>Submit your command
+                      </a>
+                    </div>
+                    <div class="col-6">
+                      <button type="button" class="btn btn-secondary btn-sm btn-block" data-dismiss="modal"><i class="fa fa-plus-square"></i> Add other product</button>
+                    </div>
+                  </div>
+                    
+                      </div>
+                  </div>
+
+                
+                <div class="modal-footer">
+                <div class="container">
+                  
+              </div>
+              </div>
+            </div>
+          </div>
+     {% endblock %}
+
+  {% block javascripts %}
+        <script>
+           
+            
+            $(document).ready(function(){
+              
+                  
+
+                  $(".view-data").click(function(){
+                    
+                    //get the id of the product
+                    let idProduct = $(this).attr("id");
+                    let url ="/product/"+idProduct;
+                    //send ajax request
+                    $.ajax({
+                      url:url,
+                      method:"post",
+                      data:idProduct,
+                      success:function(data){
+                        //console.log(data);
+                        $("#productIdJson").val(data.id);
+                        $("#productTitleJson").html(data.title);
+                        $("#productPriceJson").html(data.price + ' DH');
+                        $("#productDescriptionJson").html(data.description);
+                        $("#productImageJson").attr('src',data.image);
+                        $("#myModal").modal("show");
+                      }
+                    });
+                  });
+
+
+
+                  //add to command encours
+                    $('#adToCartBtn').click(function(){
+                      
+                      var quantity = $("#productQuantity").val();
+                      var idProduct = $("#productIdJson").val();
+                     
+                      var url = `/encours/${idProduct}/${quantity}`;
+                      //send request to server
+                      $.ajax({
+                      url:url,
+                      method:"post",
+                      data:idProduct,
+                      success:function(data){
+                        console.log(data);
+                      }
+                    });
+                      
+
+                      //$(`.view-data[id=${idProduct}]`).addClass("bg-warning").prop('disabled', true).attr("value","Already selected");
+                      $("#ftCommand").removeClass("d-none");
+                    });
+
+                  //
+              });
+        
+        
+        </script>
+  {% endblock %}
+
