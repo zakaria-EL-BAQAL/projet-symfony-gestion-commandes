@@ -125,10 +125,7 @@ class CompteConnexionController extends Controller
      */
     public function editPasswordAction(Request $request,ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
-        if(!$this->getUser()){
-            return $this->redirectToRoute('user_login');
-        }
-        
+       
         $password = new PasswordUpdate();
 
         $client = $this->getUser();
@@ -156,7 +153,7 @@ class CompteConnexionController extends Controller
                     'success','Your password is suuccefuly updated'
                 );
 
-               return $this->redirectToRoute('user_profile');
+               return $this->redirectToRoute('user_profile',["client"=>$client->getId()]);
             }
         }
 
