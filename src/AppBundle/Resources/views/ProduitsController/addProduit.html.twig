@@ -1,32 +1,32 @@
-{% extends 'base.html.twig'%}
+    {% extends 'base.html.twig'%}
 
-{% block title %} {% endblock %}
-
-
+    {% block title %} {% endblock %}
 
 
-{% block body %}
 
-  <div class="container">
-  <div class="card bg-info text-white text-center"><h1 >New Product</h1></div>
-        <div class="row mt-5">
-            <div class="col-md-6 offset-md-3">
-                {{ form_start(form) }}
-                {{ form_widget(form)}}
-                <div class="text-center">   
-                 <button type="submit" class="btn btn-success  "><i class="fa fa-save"></i> Add product</button>
-                <div><br>
-                {{ form_end(form) }}  
-                <div class="text-left">
-                     <a  class="btn  btn-danger " href="{{ path('index_route') }}">
-                <i class="fa fa-fast-backward"></i>
-                 
-            </a>
-    </div>   
+
+    {% block body %}
+
+    <div class="container">
+    <div class="card bg-info text-white text-center"><h1 >New Product</h1></div>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    {{ form_start(form) }}
+                    {{ form_widget(form)}}
+                    <div class="text-center">   
+                        <button type="submit" class="btn btn-success  "><i class="fa fa-save"></i> Add product</button>
+                        <div><br>
+                        {{ form_end(form) }}  
+                        <div class="text-left">
+                            <a  class="btn  btn-danger " href="{{ path('index_route') }}">
+                                <i class="fa fa-fast-backward"></i>
+                        
+                            </a>
+                        </div>   
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-         
-{% endblock %}
+            
+    {% endblock %}
 

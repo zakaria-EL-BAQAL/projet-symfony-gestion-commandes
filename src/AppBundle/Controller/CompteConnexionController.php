@@ -125,7 +125,7 @@ class CompteConnexionController extends Controller
      */
     public function editPasswordAction(Request $request,ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
-       
+               
         $password = new PasswordUpdate();
 
         $client = $this->getUser();

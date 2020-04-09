@@ -6,28 +6,30 @@
 
 
 {% block body %}
-    <div class="container text-center">
+    <div class="container ">
          <div class="card bg-info text-white text-center"><h1 >Edit product</h1></div><br><br>
-            <div class="col-md-12 offset-md-0 ">
+            <div class=" col-md-9 offset-md-3 ">
                
                                
                 {{ form_start(form) }}
 
-                 <div class="d-inline-block  col-md-9 col-xs-6 col-md-offset-3 ">
+                 <div class="d-inline-block form-group  col-md-9 col-xs-6 col-md-offset-3 ">
                     {{ form_widget(form)}}
-                
+                <br><div class="text-center">
                         <button type="submit" class=" btn btn-success  ">
                             <i class="fa fa-edit"></i>Edit product
                         </button>
                 
                      {{ form_end(form) }}     
-                </div><br>
-                <div class="d-inline-block">
-                      <a  class="btn btn-primary " href="{{ path('index_route') }}">
-                    <i class="fa fa-table"></i>
-                    List product
-                  </a>
+                
+                <div class="d-inline-block form-group ">
+                       <a  class="btn btn-primary " href="{{ path('index_route') }}">
+                           <i class="fa fa-table"></i>
+                            List product
+                       </a>
                 </div>
+               </div>  
+          </div>
     </div>         
 {% endblock %}
 

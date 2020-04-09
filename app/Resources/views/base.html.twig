@@ -8,8 +8,9 @@
 
         <!-- Bootstrap core CSS -->
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
+        <link href="css/fontawesome.min.css" rel="stylesheet">
         <link rel='stylesheet' href="{{ asset('css/all.min.css') }}" />
+        <link href="{{ asset('web/css/me.css') }}" rel="stylesheet">
         <link href="{{ asset('css/heroic-features.css') }}" rel="stylesheet">
         <script src="https://kit.fontawesome.com/379ed65348.js" crossorigin="anonymous"></script>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -22,7 +23,6 @@
     
         {% include 'partials/header.user.html.twig' %}
 
-       
 
         <div class="container">
                  {% block body %}{% endblock %}
